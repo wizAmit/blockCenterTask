@@ -1,0 +1,8 @@
+version: '3'
+services:
+  combined-app:
+    build: ./src  # Path to the directory with your Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./src:/person_app  # Mount your app code into the container
