@@ -5,7 +5,6 @@ import json
 import subprocess
 from reportlab.pdfgen import canvas
 
-
 app = Flask(__name__)
 CORS(app)
 
@@ -14,6 +13,7 @@ def generate_pdf(res):
     c.drawString(100, 750, json.dumps( res ))
     c.showPage()
     c.save()
+    print('PDF saved successfully')
 
 # Read the configuration from the JSON file
 with open('config.json', 'r') as config_file:
@@ -31,8 +31,10 @@ def get_pdf(pdf_filename="sample.pdf"):
 
 @app.route('/birthdate', methods=['POST'])
 def calculate_birthdate_info():
+    request_data = request.json()
+    app.logger.info(f'Incoming Request Data: {request_data}')
     try:
-        birthdate = request.json['birthdate']
+        birthdate = request_data['dateOfBirth']
 
         # Execute the external R script with the provided birthdate
         r_command = f"Rscript {r_script_path} {birthdate}"

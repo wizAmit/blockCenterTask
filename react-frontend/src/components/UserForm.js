@@ -37,7 +37,7 @@ const UserForm = () => {
 
       if (response.ok) {
         // Handle successful submission
-        console.log('Form data submitted successfully');
+        console.log('Form data submitted successfully {}', response.body);
         setFormSubmitted(true);
       } else {
         // Handle errors
