@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
+from io import BytesIO
 import json
 import subprocess
 from reportlab.pdfgen import canvas
@@ -10,7 +11,7 @@ CORS(app)
 
 def generate_pdf(res):
     c = canvas.Canvas("sample.pdf")
-    c.drawString(100, 750, res)
+    c.drawString(100, 750, json.dumps( res ))
     c.showPage()
     c.save()
 
@@ -24,8 +25,8 @@ def success():
     print('Yay!!')
     return 'welcome'
 
-@app.route('/get-pdf/<pdf_filename>')
-def get_pdf(pdf_filename='sample.pdf'):
+@app.route('/get-pdf/', methods=['GET'])
+def get_pdf(pdf_filename="sample.pdf"):
         return send_file(pdf_filename, as_attachment=True)
 
 @app.route('/birthdate', methods=['POST'])
@@ -43,7 +44,7 @@ def calculate_birthdate_info():
                 'age': result[0], 
                 'day_of_week': result[1]
                 }
-        generate_pdf(response)
+        pdf_file = generate_pdf(response)
         return jsonify(response)
     except Exception as e:
         return jsonify({'error': str(e)})

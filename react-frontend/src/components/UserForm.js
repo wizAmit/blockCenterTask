@@ -117,7 +117,7 @@ const UserForm = () => {
       </form>
 
       {/* Conditionally render the "Get PDF" button when the form is successfully submitted */}
-      {formSubmitted && <PDFButton />}
+      {formSubmitted && <PDFButton pdfUrl="http://127.0.0.1:5000/get-pdf/" buttonText="Download PDF" />}
 
     </div>
   );

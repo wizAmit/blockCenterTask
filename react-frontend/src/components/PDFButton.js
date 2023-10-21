@@ -1,11 +1,9 @@
 // components/PDFButton.js
 import React from 'react';
 
-const PDFButton = ({ onClick }) => {
+const PDFButton = ({ pdfUrl, buttonText }) => {
   const downloadPDF = async () => {
     try {
-      const pdfUrl = 'http://127.0.0.1:5000/get-pdf/sample';
-
       // Fetch the PDF content from the URL
       const response = await fetch(pdfUrl);
       const pdfData = await response.arrayBuffer();
@@ -20,10 +18,9 @@ const PDFButton = ({ onClick }) => {
     }
   };
 
+
   return (
-    <div>
-      <button onClick={onClick}>Get PDF</button>
-    </div>
+    <button onClick={downloadPDF}>{buttonText}</button>
   );
 };
 
